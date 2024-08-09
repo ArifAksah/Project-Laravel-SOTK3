@@ -9,7 +9,7 @@
                     <div class="col-md-8 col-lg-6 mx-auto">
                         <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                             <div class="brand-logo text-center">
-                                <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" style="max-width: 200px;">
+                                <img src="{{ asset('assets/images/oh.png') }}" alt="logo" style="max-width: 200px;">
                             </div>
                             <h4 class="text-center">Hello! Let's get started</h4>
                             <h6 class="fw-light text-center">Sign in to continue.</h6>
