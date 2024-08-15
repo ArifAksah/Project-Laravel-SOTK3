@@ -41,6 +41,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
+            'asal_perusahaan' => $request->asal_perusahaan,
             'password' => Hash::make($request->password),
             'role' => 'quest',  // Set default role ke 'quest'
             'is_approved' => false,  // Default value untuk quest

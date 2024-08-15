@@ -15,7 +15,7 @@
                                 
                                 <!-- Username -->
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="Username" value="{{ old('username') }}" required autofocus autocomplete="username">
+                                    <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="Nama Lengkap" value="{{ old('username') }}" required autofocus autocomplete="username">
                                     <x-input-error :messages="$errors->get('username')" class="mt-2" />
                                 </div>
 
@@ -23,6 +23,11 @@
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required autocomplete="email">
                                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                </div>
+                                <!-- Asal Perusahaan -->
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-lg" id="asal_perusahaan" name="asal_perusahaan" placeholder="Asal Perusahaan" value="{{ old('asal_perusahaan') }}" required autocomplete="Asal Perusahaan">
+                                    <x-input-error :messages="$errors->get('asal_perusahaan')" class="mt-2" />
                                 </div>
 
                                 <!-- Password -->

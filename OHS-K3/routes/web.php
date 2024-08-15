@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InspectionController;
+use App\Http\Controllers\SummaryController;
+use App\Http\Controllers\AdminApprovalController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExpensesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +23,9 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -30,6 +34,13 @@ Route::middleware('auth')->group(function () {
 });
 Route::middleware(['auth'])->group(function () {
     Route::resource('inspections', InspectionController::class);
+    Route::get('/summary', [SummaryController::class, 'index'])->name('summary.index');
 });
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/approvals', [AdminApprovalController::class, 'index'])->name('admin_approvals.index');
+    Route::patch('/admin/approvals/{id}/approve', [AdminApprovalController::class, 'approve'])->name('admin_approvals.approve');
+    Route::delete('/admin/approvals/{id}/reject', [AdminApprovalController::class, 'reject'])->name('admin_approvals.reject');
+});
+Route::get('/expenses', [ExpensesController::class, 'index'])->name('expenses.index');
 
 require __DIR__.'/auth.php';

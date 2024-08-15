@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('admin_approvals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('admin_id')->constrained('users')->onDelete('cascade');
             $table->timestamp('approved_at')->nullable();
             $table->timestamps(); // created_at dan updated_at otomatis dibuat
         });

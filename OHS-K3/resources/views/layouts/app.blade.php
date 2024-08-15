@@ -40,12 +40,15 @@
             @endif
 
             <!-- Page Content -->
-            <main>
-                <div class="container mt-4">
-                    {{ $slot }}
-                </div>
-            </main>
+
+                {{$slot}}
+
+            </div>
+            <!-- main-panel ends -->
         </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- pagecontainer scroller ends -->
 
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

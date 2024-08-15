@@ -20,5 +20,6 @@ class Inspection extends Model
         'inspection_date',
         'reporten',
         'user_id',
+        'image',
     ];
 }
