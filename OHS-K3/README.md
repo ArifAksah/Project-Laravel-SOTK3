@@ -64,5 +64,5 @@ Aplikasi ini dilisensikan di bawah lisensi [MIT](LICENSE).
 
 ## Kontak
 Untuk informasi lebih lanjut, hubungi:
-- **Nama:** [Nama Anda]
-- **Email:** [email@semen-tonasa.com]
+- **Nama:** MUH. ARIF
+- **Email:** arif80352@gmail.com
