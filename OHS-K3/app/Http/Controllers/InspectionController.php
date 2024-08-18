@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Inspection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class InspectionController extends Controller
 {
@@ -30,7 +31,6 @@ class InspectionController extends Controller
     // Menyimpan data inspeksi baru
     public function store(Request $request)
     {
-        // Validasi data input
         $validatedData = $request->validate([
             'plant' => 'required|string|max:255',
             'area' => 'required|string|max:255',
@@ -42,27 +42,29 @@ class InspectionController extends Controller
             'recommendation' => 'required|string',
             'inspection_date' => 'required|date',
             'reporten' => 'required|string|max:255',
-            'image' => 'nullable|string'  // Validasi gambar sebagai string (Base64)
+            'image' => 'nullable|string'
         ]);
     
-        // Tambahkan user_id secara manual
         $validatedData['user_id'] = auth()->id();
     
-        // Proses decoding Base64 menjadi file gambar dan simpan
+        // Ambil zona waktu dari pengguna yang sedang login
+        $timezone = auth()->user()->timezone;
+    
         if (!empty($validatedData['image'])) {
             $imageData = $validatedData['image'];
-            $imageName = 'inspections/' . uniqid() . '.png'; // Nama file yang unik
+            $imageName = 'inspections/' . uniqid() . '.png';
             Storage::disk('public')->put($imageName, base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData)));
             $validatedData['image'] = $imageName;
         }
     
-        // Simpan data inspeksi beserta gambar jika ada
-        Inspection::create($validatedData);
+        $inspection = Inspection::create($validatedData);
+    
+        $inspection->save();
     
         return redirect()->route('inspections.index')
             ->with('success', 'Data inspeksi berhasil ditambahkan.');
     }
-    
+        
     
 
     public function show(Inspection $inspection)

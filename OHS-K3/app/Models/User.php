@@ -20,6 +20,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'timezone',
+        'asal_perusahaan',
         'is_approved',
     ];
 

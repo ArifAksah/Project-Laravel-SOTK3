@@ -9,7 +9,15 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label for="plant" class="form-label">Plant</label>
-                            <input type="text" name="plant" id="plant" class="form-control" value="{{ request('plant') }}">
+                            <select name="plant" id="plant" class="form-control">
+                                <option value="">-- Select Plant --</option>
+                                <option value="Plant 2/3" {{ request('plant') == 'Plant 2/3' ? 'selected' : '' }}>Plant 2/3</option>
+                                <option value="Plant 4" {{ request('plant') == 'Plant 4' ? 'selected' : '' }}>Plant 4</option>
+                                <option value="Plant 5" {{ request('plant') == 'Plant 5' ? 'selected' : '' }}>Plant 5</option>
+                                <option value="Power Plant" {{ request('plant') == 'Power Plant' ? 'selected' : '' }}>Power Plant</option>
+                                <option value="Head Office" {{ request('plant') == 'Head Office' ? 'selected' : '' }}>Head Office</option>
+                                <option value="Tambang" {{ request('plant') == 'Tambang' ? 'selected' : '' }}>Tambang</option>
+                            </select>
                         </div>
                         <div class="col-md-3">
                             <label for="area" class="form-label">Area</label>
@@ -31,32 +39,36 @@
 
                 <hr>
 
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Plant</th>
-                            <th>Area</th>
-                            <th>Sub Area</th>
-                            <th>Category</th>
-                            <th>Status</th>
-                            <th>Inspection Date</th>
-                            <th>Reporten</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($inspections as $inspection)
+                @if($inspections->isEmpty())
+                    <p class="text-center">Tidak ada data inspeksi yang ditemukan.</p>
+                @else
+                    <table class="table table-bordered">
+                        <thead>
                             <tr>
-                                <td>{{ $inspection->plant }}</td>
-                                <td>{{ $inspection->area }}</td>
-                                <td>{{ $inspection->sub_area }}</td>
-                                <td>{{ $inspection->category }}</td>
-                                <td>{{ $inspection->status }}</td>
-                                <td>{{ $inspection->inspection_date }}</td>
-                                <td>{{ $inspection->reporten }}</td>
+                                <th>Plant</th>
+                                <th>Area</th>
+                                <th>Sub Area</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Inspection Date</th>
+                                <th>Reporter</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach($inspections as $inspection)
+                                <tr>
+                                    <td>{{ $inspection->plant }}</td>
+                                    <td>{{ $inspection->area }}</td>
+                                    <td>{{ $inspection->sub_area }}</td>
+                                    <td>{{ $inspection->category }}</td>
+                                    <td>{{ $inspection->status }}</td>
+                                    <td>{{ $inspection->inspection_date }}</td>
+                                    <td>{{ $inspection->reporten }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
             </div>
         </div>
     </div>

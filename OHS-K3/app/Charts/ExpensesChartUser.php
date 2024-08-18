@@ -5,8 +5,9 @@ namespace App\Charts;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use App\Models\Inspection;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
-class ExpensesChart
+class ExpensesChartUser
 {
     protected $chart;
 
@@ -17,8 +18,11 @@ class ExpensesChart
 
     public function build(): \ArielMejiaDev\LarapexCharts\LineChart
     {
-        // Ambil semua data inspeksi
-        $inspections = Inspection::all();
+        // Ambil user_id dari pengguna yang sedang login
+        $userId = Auth::id();
+
+        // Ambil semua data inspeksi yang sesuai dengan user_id
+        $inspections = Inspection::where('user_id', $userId)->get();
 
         // Format data per hari
         $dailyData = $inspections->groupBy(function ($date) {

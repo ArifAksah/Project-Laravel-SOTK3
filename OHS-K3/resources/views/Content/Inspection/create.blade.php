@@ -9,7 +9,7 @@
                     @csrf
                     <!-- Elemen Video untuk Capture Gambar -->
                     <div class="mb-3">
-                        <label for="image" class="form-label">Capture Temuan (optional)</label>
+                        <label for="image" class="form-label">Capture Temuan </label>
                         <div>
                             <video id="video" width="100%" height="100%" autoplay></video>
                         </div>
@@ -23,7 +23,7 @@
                     <!-- Preview Gambar yang Diambil -->
                     <div class="mb-3">
                         <canvas id="canvas" style="display: none;"></canvas>
-                        <img id="photo" style="display: none;" alt="Hasil Capture">
+                        <img id="photo" class="img-fluid" style="display: none;" alt="Hasil Capture">
                     </div>
 
                     <div class="mb-3">
@@ -140,14 +140,32 @@
         const captureButton = document.getElementById('capture');
         const imageData = document.getElementById('image');
 
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function(stream) {
-                video.srcObject = stream;
+        let currentStream;
+
+        async function startCamera() {
+            try {
+                // Hentikan stream sebelumnya jika ada
+                if (currentStream) {
+                    let tracks = currentStream.getTracks();
+                    tracks.forEach(track => track.stop());
+                }
+
+                // Akses kamera perangkat, pilih kamera belakang jika tersedia
+                const stream = await navigator.mediaDevices.enumerateDevices();
+                const videoDevices = stream.filter(device => device.kind === 'videoinput');
+                const backCamera = videoDevices.find(device => device.label.toLowerCase().includes('back')) || videoDevices[0];
+
+                currentStream = await navigator.mediaDevices.getUserMedia({
+                    video: { deviceId: backCamera.deviceId }
+                });
+                video.srcObject = currentStream;
                 video.play();
-            })
-            .catch(function(err) {
+            } catch (err) {
                 console.log("Error: " + err);
-            });
+            }
+        }
+
+        startCamera();
 
         // Event listener untuk menangkap gambar
         captureButton.addEventListener('click', function() {
@@ -163,4 +181,5 @@
             imageData.value = dataURL;
         });
     </script>
+
 </x-app-layout>

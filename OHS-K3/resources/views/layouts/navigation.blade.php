@@ -18,7 +18,7 @@
           <ul class="navbar-nav">
             <li class="nav-item fw-semibold d-none d-lg-block ms-0">
               <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">John Doe</span></h1>
-              <h3 class="welcome-sub-text">Your performance summary this week </h3>
+              <h3 class="welcome-sub-text">Your performance summary mmm week </h3>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto">
@@ -59,26 +59,29 @@
               </a>
             </li>
             <li class="nav-item nav-category"></li>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i class="menu-icon mdi mdi-floor-plan"></i>
-                <span class="menu-title">Temuan</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> 
-                    <a class="nav-link" href="{{ route('inspections.create') }}">Input Temuan</a>
-                  </li>
-                  <li class="nav-item"> 
-                    <a class="nav-link" href="{{ route('inspections.index') }}">Daftar Temuan</a>
-                  </li>
-                  <li class="nav-item"> 
-                    <a class="nav-link" href="{{route('summary.index')}}">Rangkuman Temuan</a> 
-                  </li>
-                </ul>
-              </div>
-            </li>
+            @if(auth()->user()->is_approved == 1)
+              <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                      <i class="menu-icon mdi mdi-floor-plan"></i>
+                      <span class="menu-title">Temuan</span>
+                      <i class="menu-arrow"></i>
+                  </a>
+                  <div class="collapse" id="ui-basic">
+                      <ul class="nav flex-column sub-menu">
+                          <li class="nav-item"> 
+                              <a class="nav-link" href="{{ route('inspections.create') }}">Input Temuan</a>
+                          </li>
+                          <li class="nav-item"> 
+                              <a class="nav-link" href="{{ route('inspections.index') }}">Daftar Temuan</a>
+                          </li>
+                          <li class="nav-item"> 
+                              <a class="nav-link" href="{{ route('summary.index') }}">Rangkuman Temuan</a> 
+                          </li>
+                      </ul>
+                  </div>
+              </li>
+          @endif
+            @if(Auth::user()->role === 'admin')
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-admin" aria-expanded="false" aria-controls="ui-admin">
                 <i class="menu-icon mdi mdi-floor-plan"></i>
@@ -88,11 +91,15 @@
               <div class="collapse" id="ui-admin">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> 
-                    <a class="nav-link" href="{{ route('admin_approvals.index') }}">Approval Vendor</a>
+                    <a class="nav-link" href="{{ route('admin_approvals.index') }}">Approval Tamu</a>
+                  </li>
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ route('karyawan.index') }}">Data karyawan</a>
                   </li>
                 </ul>
               </div>
             </li>
+            @endif
             <li class="nav-item">
               <a class="nav-link" href="docs/documentation.html">
                 <i class="menu-icon mdi mdi-file-document"></i>

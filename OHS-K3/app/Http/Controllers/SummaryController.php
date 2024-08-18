@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Inspection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SummaryController extends Controller
 {
     // Menampilkan ringkasan inspeksi dengan filter
     public function index(Request $request)
     {
+        // Ambil user yang sedang login
+        $user = Auth::user();
+
         // Ambil input filter dari request
         $plant = $request->input('plant');
         $area = $request->input('area');
@@ -18,6 +22,11 @@ class SummaryController extends Controller
 
         // Query dasar untuk mengambil data inspeksi
         $query = Inspection::query();
+
+        // Jika pengguna bukan admin, filter berdasarkan user_id
+        if ($user->role !== 'admin') {
+            $query->where('user_id', $user->id);
+        }
 
         // Filter berdasarkan Plant
         if ($plant) {

@@ -4,8 +4,9 @@ namespace App\Charts;
 
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use App\Models\Inspection;
+use Illuminate\Support\Facades\Auth;
 
-class StatusChart
+class StatusChartUser
 {
     protected $chart;
 
@@ -16,12 +17,18 @@ class StatusChart
 
     public function build(): \ArielMejiaDev\LarapexCharts\RadialChart
     {
-        // Menghitung jumlah Positive dan Negative di kolom category
-        $totalInspections = Inspection::count();
-        $positiveCount = Inspection::where('category', 'Positive')->count();
-        $negativeCount = Inspection::where('category', 'Negative')->count();
+        // Ambil pengguna yang sedang login
+        $user = Auth::user();
 
-        // Menghitung persentase Positive dan Negative
+        // Ambil data inspeksi berdasarkan user_id yang sama dengan ID pengguna yang login
+        $inspections = Inspection::where('user_id', $user->id)->get();
+
+        // Menghitung jumlah Positive dan Negative di kolom category
+        $totalInspections = $inspections->count();
+        $positiveCount = $inspections->where('category', 'Positive')->count();
+        $negativeCount = $inspections->where('category', 'Negative')->count();
+
+        // Menghitung persentase Positive dan Negative dengan 2 angka di belakang koma
         $positivePercentage = $totalInspections > 0 ? number_format(($positiveCount / $totalInspections) * 100, 2) : 0;
         $negativePercentage = $totalInspections > 0 ? number_format(($negativeCount / $totalInspections) * 100, 2) : 0;
 

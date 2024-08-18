@@ -1,0 +1,17 @@
+{
+    "name": "Safety Observation Tour(SOT)",
+    "short_name": "SOT",
+    "start_url": "/index.php",
+    "background_color": "#6777ef",
+    "description": "Safety Observation Tour(SOT)",
+    "display": "fullscreen",
+    "theme_color": "#6777ef",
+    "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
